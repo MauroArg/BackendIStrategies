@@ -92,7 +92,6 @@ C:\Users\Mauro\Desktop\Backend\SessionApi\SessionApi\bin\es\System.Web.Razor.res
 C:\Users\Mauro\Desktop\Backend\SessionApi\SessionApi\bin\es\System.Web.WebPages.resources.dll
 C:\Users\Mauro\Desktop\Backend\SessionApi\SessionApi\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\Mauro\Desktop\Backend\SessionApi\SessionApi\bin\es\System.Web.WebPages.Razor.resources.dll
-C:\Users\Mauro\Desktop\Backend\SessionApi\SessionApi\obj\Debug\SessionApi.csprojAssemblyReference.cache
 C:\Users\Mauro\Desktop\Backend\SessionApi\SessionApi\obj\Debug\SessionApi.csproj.CoreCompileInputs.cache
 C:\Users\Mauro\Desktop\Backend\SessionApi\SessionApi\obj\Debug\SessionApi.csproj.CopyComplete
 C:\Users\Mauro\Desktop\Backend\SessionApi\SessionApi\obj\Debug\SessionApi.dll

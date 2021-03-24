@@ -164,6 +164,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -187,6 +188,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Account.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountResponse.cs" />
+    <Compile Include="Models\LoginBody.cs" />
     <Compile Include="Models\User.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -205,6 +208,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>User.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

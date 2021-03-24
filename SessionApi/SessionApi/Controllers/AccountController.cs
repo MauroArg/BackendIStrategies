@@ -16,37 +16,92 @@ namespace SessionApi.Controllers
     {
         private DB_A71A17_accountEntity db = new DB_A71A17_accountEntity();
 
-        // GET: api/account
-        public IQueryable<account> Getaccount()
+        //GET: api/accountByUser
+        [Route("api/AccountByUser")]
+        public GetAccountsRes GetAccountsByUser(long id, long user)
         {
-            return db.account;
+            GetAccountsRes res = new GetAccountsRes();
+
+            IQueryable<account> ac = from x in db.account
+                                     where x.user_id.Equals(id)
+                                     select x;
+
+            List<account> acList = ac.ToList();
+
+            if (acList.Count() > 0)
+            {
+                res.code = 0;
+                res.message = "Completado";
+                res.account = acList;
+                return res;
+            }
+            else
+            {
+                res.code = 1;
+                res.message = "Este usuario no tiene cuentas";
+                return res;
+            }
+
+        }
+
+        // GET: api/account
+        public GetAccountsRes Getaccount()
+        {
+            GetAccountsRes res = new GetAccountsRes();
+
+            IQueryable<account> ac = db.account;
+
+            if(ac.Count() > 0)
+            {
+                res.code = 0;
+                res.message = "Completado";
+                res.account = ac.ToList();
+            }
+            else
+            {
+                res.code = 1;
+                res.message = "No se encontraron cuentas";
+            }
+
+            return res;
         }
 
         // GET: api/account/5
         [ResponseType(typeof(account))]
-        public IHttpActionResult Getaccount(long id)
+        public GetAccountRes Getaccount(long id)
         {
+            GetAccountRes res = new GetAccountRes();
             account account = db.account.Find(id);
             if (account == null)
             {
-                return NotFound();
+                res.code = 1;
+                res.message = "No encontrado";
+                return res;
             }
 
-            return Ok(account);
+            res.code = 0;
+            res.message = "Completado";
+            res.account = account;
+            return res;
         }
 
         // PUT: api/account/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult Putaccount(long id, account account)
+        public PutAccountRes Putaccount(long id, account account)
         {
+            PutAccountRes res = new PutAccountRes();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                res.code = 1;
+                res.message = "Cuenta no valida";
+                return res;
             }
 
             if (id != account.account_id)
             {
-                return BadRequest();
+                res.code = 2;
+                res.message = "Cuenta y Id enviados no corresponen";
+                return res;
             }
 
             db.Entry(account).State = EntityState.Modified;
@@ -59,7 +114,9 @@ namespace SessionApi.Controllers
             {
                 if (!accountExists(id))
                 {
-                    return NotFound();
+                    res.code = 3;
+                    res.message = "Cuenta no existe";
+                    return res;
                 }
                 else
                 {
@@ -67,38 +124,61 @@ namespace SessionApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            res.code = 0;
+            res.message = "Completado";
+            return res;
         }
 
         // POST: api/account
         [ResponseType(typeof(account))]
-        public IHttpActionResult Postaccount(account account)
+        public PostAccountRes Postaccount(account account)
         {
+            PostAccountRes res = new PostAccountRes();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                res.code = 1;
+                res.message = "Cuenta no valida";
+                return res;
             }
 
             db.account.Add(account);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                res.code = 2;
+                res.message = "Usuario no valido";
+                return res;
+            }
 
-            return CreatedAtRoute("DefaultApi", new { id = account.account_id }, account);
+            res.code = 0;
+            res.message = "Completado";
+            res.account = account;
+            return res;
         }
 
         // DELETE: api/account/5
         [ResponseType(typeof(account))]
-        public IHttpActionResult Deleteaccount(long id)
+        public DeleteAccountRes Deleteaccount(long id, long user)
         {
+            DeleteAccountRes res = new DeleteAccountRes();
+
             account account = db.account.Find(id);
             if (account == null)
             {
-                return NotFound();
+                res.code = 3;
+                res.message = "Cuenta no existe";
+                return res;
             }
 
             db.account.Remove(account);
             db.SaveChanges();
 
-            return Ok(account);
+            res.code = 0;
+            res.message = "Completado";
+            return res;
         }
 
         protected override void Dispose(bool disposing)

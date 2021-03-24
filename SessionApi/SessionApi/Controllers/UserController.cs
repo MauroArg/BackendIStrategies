@@ -17,36 +17,61 @@ namespace SessionApi.Controllers
         private DB_A71A17_userEntity db = new DB_A71A17_userEntity();
 
         // GET: api/User
-        public IQueryable<user> Getuser()
+        public GetUsersRes Getuser()
         {
-            return db.user;
+            GetUsersRes res = new GetUsersRes();
+            IQueryable < user > us = db.user;
+            if(us.Count() > 0)
+            {
+                res.code = 0;
+                res.message = "Completado";
+                res.user = us.ToList();
+            }
+            else
+            {
+                res.code = 1;
+                res.message = "No se encontraron usuarios";
+            }
+
+            return res;
         }
 
         // GET: api/User/5
         [ResponseType(typeof(user))]
-        public IHttpActionResult Getuser(long id)
+        public GetUserRes Getuser(long id)
         {
+            GetUserRes res = new GetUserRes();
             user user = db.user.Find(id);
             if (user == null)
             {
-                return NotFound();
+                res.code = 1;
+                res.message = "No encontrado";
+                return res;
             }
 
-            return Ok(user);
+            res.code = 0;
+            res.message = "Completado";
+            res.user = user;
+            return res;
         }
 
         // PUT: api/User/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult Putuser(long id, user user)
+        public PutUserRes Putuser(long id, user user)
         {
+            PutUserRes res = new PutUserRes();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                res.code = 1;
+                res.message = "Usuario no valido";
+                return res;
             }
 
             if (id != user.id)
             {
-                return BadRequest();
+                res.code = 2;
+                res.message = "Usuario y Id enviados no corresponen";
+                return res;
             }
 
             db.Entry(user).State = EntityState.Modified;
@@ -59,7 +84,9 @@ namespace SessionApi.Controllers
             {
                 if (!userExists(id))
                 {
-                    return NotFound();
+                    res.code = 3;
+                    res.message = "Usuario no existe";
+                    return res;
                 }
                 else
                 {
@@ -67,39 +94,55 @@ namespace SessionApi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            res.code = 0;
+            res.message = "Completado";
+            return res;
         }
 
         // POST: api/User
         [ResponseType(typeof(user))]
-        public IHttpActionResult Postuser(user user)
+        public PostUserRes Postuser(user user)
         {
+            PostUserRes res = new PostUserRes();
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                res.code = 1;
+                res.message = "Usuario no valido";
+                return res;
             }
+
 
             db.user.Add(user);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = user.id }, user);
+            res.code = 0;
+            res.message = "Completado";
+            res.user = user;
+            return res;
         }
 
         // DELETE: api/User/5
         [ResponseType(typeof(user))]
-        public IHttpActionResult Deleteuser(long id)
+        public DeleteUserRes Deleteuser(long id)
         {
+            DeleteUserRes res = new DeleteUserRes();
             user user = db.user.Find(id);
             if (user == null)
             {
-                return NotFound();
+                res.code = 3;
+                res.message = "Usuario no existe";
+                return res;
             }
 
             db.user.Remove(user);
             db.SaveChanges();
 
-            return Ok(user);
+            res.code = 0;
+            res.message = "Completado";
+            return res;
         }
+
+
 
         protected override void Dispose(bool disposing)
         {

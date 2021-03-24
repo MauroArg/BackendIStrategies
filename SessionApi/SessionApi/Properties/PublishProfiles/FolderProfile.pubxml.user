@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\Mauro\Documents\IStrategies</_PublishTargetUrl>
-    <History>True|2021-03-24T02:22:45.4694726Z;</History>
+    <History>True|2021-03-24T22:16:22.0879806Z;True|2021-03-24T15:16:16.7032635-06:00;True|2021-03-24T14:55:25.6950523-06:00;False|2021-03-24T14:54:31.4745352-06:00;True|2021-03-23T20:22:45.4694726-06:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Areas/HelpPage/HelpPage.css">
@@ -270,10 +270,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/08/2018 12:18:16</publishTime>
     </File>
     <File Include="bin/SessionApi.dll">
-      <publishTime>03/23/2021 20:22:44</publishTime>
+      <publishTime>03/24/2021 16:16:21</publishTime>
     </File>
     <File Include="bin/SessionApi.pdb">
-      <publishTime>03/23/2021 20:22:44</publishTime>
+      <publishTime>03/24/2021 16:16:21</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>11/28/2018 13:00:36</publishTime>
@@ -405,7 +405,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/23/2021 16:40:50</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/23/2021 20:22:44</publishTime>
+      <publishTime>03/24/2021 14:55:25</publishTime>
     </File>
   </ItemGroup>
 </Project>
