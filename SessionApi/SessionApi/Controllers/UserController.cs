@@ -74,6 +74,19 @@ namespace SessionApi.Controllers
                 return res;
             }
 
+            IQueryable<user> us = from x in db.user
+                                  where !x.id.Equals(id) && x.email.Equals(user.email)
+                                  select x;
+
+            List<user> usList = us.ToList();
+
+            if (usList.Count() > 0)
+            {
+                res.code = 3;
+                res.message = "Email repetido";
+                return res;
+            }
+
             db.Entry(user).State = EntityState.Modified;
 
             try
@@ -84,7 +97,7 @@ namespace SessionApi.Controllers
             {
                 if (!userExists(id))
                 {
-                    res.code = 3;
+                    res.code = 4;
                     res.message = "Usuario no existe";
                     return res;
                 }
@@ -111,14 +124,39 @@ namespace SessionApi.Controllers
                 return res;
             }
 
+            IQueryable<user> us = from x in db.user
+                                  where x.email.Equals(user.email)
+                                  select x;
 
-            db.user.Add(user);
-            db.SaveChanges();
+            List<user> usList = us.ToList();
 
-            res.code = 0;
-            res.message = "Completado";
-            res.user = user;
-            return res;
+            if (usList.Count() > 0)
+            {
+                res.code = 2;
+                res.message = "Email repetido";
+                return res;
+            }
+            else
+            {
+
+                try
+                {
+                    db.user.Add(user);
+                    db.SaveChanges();
+
+                    res.code = 0;
+                    res.message = "Completado";
+                    res.user = user;
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    res.code = 99;
+                    res.message = "Error inesperado";
+                    return res;
+                }
+            }
+
         }
 
         // DELETE: api/User/5

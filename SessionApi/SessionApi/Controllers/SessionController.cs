@@ -16,28 +16,38 @@ namespace SessionApi.Controllers
         {
             LoginSession res = new LoginSession();
 
-            IQueryable<user> us = from x in db.user
-                                  where x.email.Equals(user.email) && x.pass.Equals(user.pass)
-                                  select x;
-
-            List < user > usList = us.ToList();
-
-            if (usList.Count() > 0)
+            try
             {
-                res.code = 0;
-                res.message = "Completado";
-                res.id = usList.ElementAt(0).id;
-                return res;
+                IQueryable<user> us = from x in db.user
+                                      where x.email.Equals(user.email) && x.pass.Equals(user.pass)
+                                      select x;
+
+                List<user> usList = us.ToList();
+
+                if (usList.Count() > 0)
+                {
+                    res.code = 0;
+                    res.message = "Completado";
+                    res.id = usList.ElementAt(0).id;
+
+                    return res;
+                }
+                else
+                {
+                    res.code = 1;
+                    res.message = "Credenciales no validas";
+                    return res;
+                }
             }
-            else
+            catch (Exception e)
             {
-                res.code = 1;
-                res.message = "Credenciales no validas";
+                res.code = 99;
+                res.message = "Error inesperado";
                 return res;
             }
         }
 
-        
+
 
 
         protected override void Dispose(bool disposing)
