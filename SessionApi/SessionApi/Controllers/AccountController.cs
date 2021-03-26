@@ -18,7 +18,7 @@ namespace SessionApi.Controllers
 
         //GET: api/accountByUser
         [Route("api/AccountByUser")]
-        public GetAccountsRes GetAccountsByUser(long id, long user)
+        public GetAccountsRes GetAccountsByUser(long id)
         {
             GetAccountsRes res = new GetAccountsRes();
 
@@ -161,7 +161,7 @@ namespace SessionApi.Controllers
 
         // DELETE: api/account/5
         [ResponseType(typeof(account))]
-        public DeleteAccountRes Deleteaccount(long id, long user)
+        public DeleteAccountRes Deleteaccount(long id)
         {
             DeleteAccountRes res = new DeleteAccountRes();
 

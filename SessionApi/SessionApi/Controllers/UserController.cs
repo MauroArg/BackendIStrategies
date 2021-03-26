@@ -152,7 +152,7 @@ namespace SessionApi.Controllers
                 catch (Exception e)
                 {
                     res.code = 99;
-                    res.message = "Error inesperado";
+                    res.message = "Error inesperado" + e.Message;
                     return res;
                 }
             }
